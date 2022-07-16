@@ -9,7 +9,7 @@ const distributeContainer = document.getElementById('distributeContainer');
 const quoteText = document.querySelector('.quote');
 const attributionText = document.querySelector('.attribution');
 
-// transfer between envelopes - after auto deposit deduct from wallet
+// transfer between envelopes - 
 const renderWallet = () => {
   walletContainer.innerHTML = '';
   fetch('/wallet')
@@ -163,13 +163,26 @@ distributeButton.addEventListener('click', () => {
             renderError(response);
           }
         })
-        .then(response => {
+        //.then(response => {
           //renderWallet();
-        });
+        //});
       }
-      distributeContainer.innerHTML = 'ENOUGH';
+      fetch(`/wallet/-${totalBudgetRequired}`, {
+        method: 'PUT',
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          renderError(response);
+        }
+      })
+      .then(response => {
+        renderWallet();
+      });
+      walletContainer.innerHTML = `You deposited ${totalBudgetRequired} into your envelopes`;
     } else {
-      distributeContainer.innerHTML = 'NOT ENOUGH';
+      walletContainer.innerHTML = 'Not Enough Funds';
     }
   });
 });
