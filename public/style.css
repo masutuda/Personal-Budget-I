@@ -74,7 +74,8 @@ body {
   #envelopeHolder p {
     border-left: 1px solid #333;
     border-right: 1px solid #333;
-    padding: 10px 15px;
+    padding: 6px 15px;
+    padding-top: 16px;
     margin: 0;
     background-color: #d08ae6;
   }

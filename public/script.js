@@ -28,7 +28,7 @@ const renderWallet = () => {
         <div id="envelopeTop">
           <h3>${response.envelopeName}</h3>
         </div>
-          <p>Amount Left: ${response.balance}</p>
+          <p>Balance: ${response.balance}</p>
         <div id="envelopeBottom"></div>
       </div>`
     walletContainer.appendChild(newEnvelope);
