@@ -42,11 +42,8 @@ submitButton.addEventListener('click', () => {
     }
   })
   .then(fromEnvelope => {
-    console.log(transferAmount);
-    console.log(fromEnvelope.amountLeft);
      if(fromEnvelope.amountLeft >= transferAmount && transferAmount > 0) {
         const newFromAmount = fromEnvelope.amountLeft - transferAmount;
-        console.log(newFromAmount);
         fetch(`/envelopes/${fromEnvelopeName}?maxBudgetByAmount=${fromEnvelope.maxBudgetByAmount}&amountLeft=${newFromAmount}`, {
             method: 'PUT',
           });
@@ -58,7 +55,6 @@ submitButton.addEventListener('click', () => {
         })
         .then(toEnvelope => {
             const newToAmount = toEnvelope.amountLeft + transferAmount;
-            console.log(newToAmount);
             fetch(`/envelopes/${toEnvelopeName}?maxBudgetByAmount=${toEnvelope.maxBudgetByAmount}&amountLeft=${newToAmount}`, {
                 method: 'PUT',
               });

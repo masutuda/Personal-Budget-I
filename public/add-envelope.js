@@ -11,7 +11,7 @@ submitButton.addEventListener('click', () => {
   const envelopeName = document.getElementById('envelopeName').value;
   const budgetAmount = document.getElementById('budgetAmount').value;
 
-  fetch(`/envelopes?envelopeName=${envelopeName}&maxBudgetByAmount=${budgetAmount}&amountLeft=${budgetAmount}`, {
+  fetch(`/envelopes?envelopeName=${envelopeName}&maxBudgetByAmount=${budgetAmount}&amountLeft=${0}`, {
     method: 'POST',
   })
   .then(response => {
