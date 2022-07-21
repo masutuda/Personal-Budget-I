@@ -116,7 +116,7 @@ body {
     background-color: #d08ae6;
   }
   
-  #selectEnvelope {
+  .selectEnvelope {
     width: auto;
     padding: 10px;
     font-size: 18px;

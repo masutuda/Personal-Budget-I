@@ -6,12 +6,26 @@ const addToWalletButton = document.getElementById('add-wallet-funds');
 const envelopeContainer = document.getElementById('envelope-container');
 const walletContainer = document.getElementById('walletContainer');
 const distributeContainer = document.getElementById('distributeContainer');
-const quoteText = document.querySelector('.quote');
-const attributionText = document.querySelector('.attribution');
 
 // transfer between envelopes - 
 const renderWallet = () => {
+  let totalBudgetRequired = 0;
+
   walletContainer.innerHTML = '';
+  fetch('/envelopes')
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      renderError(response);
+    }
+  })
+  .then(response => {
+    for(let i = 0; i < response.length; i++){
+      totalBudgetRequired += response[i].maxBudgetByAmount;
+    }
+  })
+
   fetch('/wallet')
     .then(response => {
       if (response.ok) {
@@ -29,6 +43,7 @@ const renderWallet = () => {
           <h3>${response.envelopeName}</h3>
         </div>
           <p>Balance: ${response.balance}</p>
+          <p>Distribution Amount: ${totalBudgetRequired}</p>
         <div id="envelopeBottom"></div>
       </div>`
     walletContainer.appendChild(newEnvelope);
@@ -163,9 +178,6 @@ distributeButton.addEventListener('click', () => {
             renderError(response);
           }
         })
-        //.then(response => {
-          //renderWallet();
-        //});
       }
       fetch(`/wallet/-${totalBudgetRequired}`, {
         method: 'PUT',
@@ -181,8 +193,9 @@ distributeButton.addEventListener('click', () => {
         renderWallet();
       });
       walletContainer.innerHTML = `You deposited ${totalBudgetRequired} into your envelopes`;
-    } else {
+  } else {
       walletContainer.innerHTML = 'Not Enough Funds';
-    }
+  }
   });
 });
+

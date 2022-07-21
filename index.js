@@ -75,13 +75,14 @@ app.put('/envelopes/:envelopeName', (req, res) => {
     res.send({
         envelope: req.query
     });
-    //res.send(budgetEnvelopes[req.envelopeIndex]);
 });
 
 // Delete Envelope
 app.delete('/envelopes/:envelopeName', (req, res) => {
+    const leftoverFunds = budgetEnvelopes[req.envelopeIndex].amountLeft;
     const deletedEnvelope = budgetEnvelopes[req.envelopeIndex];
     budgetEnvelopes.splice(req.envelopeIndex, 1);
+    wallet.balance += leftoverFunds;
     res.status(204);
     res.send(deletedEnvelope); 
 });
